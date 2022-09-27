@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\" />
-    <Folder Include="ViewModels\" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PCB_Test.DataProvider.Implementation\PCB_Test.DataProvider.Implementation.csproj" />
     <ProjectReference Include="..\PCB_Test.Services\PCB_Test.Services.csproj" />
   </ItemGroup>
 

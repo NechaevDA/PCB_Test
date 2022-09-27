@@ -4,9 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PCB_Test.UI"
+        xmlns:vm="clr-namespace:PCB_Test.UI.ViewModels"
+        xmlns:controls="clr-namespace:PCB_Test.UI.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance vm:MainWindowViewModel}">
+    <TabControl Style="{StaticResource AdaptiveTabControl}" 
+                BorderThickness="0"
+                SelectedIndex="0"
+                ItemsSource="{Binding TabViewModels}">
+        <TabControl.Resources>
+            <DataTemplate DataType="{x:Type vm:OrdersTabViewModel}">
+                <controls:OrdersTabView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:QuoteTabViewModel}">
+                <controls:QuoteTabView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:PreferencesTabViewModel}">
+                <controls:PreferencesTabView/>
+            </DataTemplate>
+        </TabControl.Resources>
+        <TabControl.ItemContainerStyle>
+            <Style TargetType="TabItem">
+                <Setter Property="Header" Value="{Binding Header}" />
+                <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+                <!-- Hack for uniform grid to work -->
+                <Setter Property="MaxWidth" Value="10000"/>
+            </Style>
+        </TabControl.ItemContainerStyle>
+    </TabControl>
 </Window>

@@ -1,9 +1,6 @@
-﻿using PCB_Test.UI.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,17 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PCB_Test.UI
+namespace PCB_Test.UI.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for OrdersTabView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OrdersTabView : UserControl
     {
-        public MainWindow()
+        public OrdersTabView()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
         }
     }
 }

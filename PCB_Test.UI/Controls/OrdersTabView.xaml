@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="PCB_Test.UI.Controls.OrdersTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PCB_Test.UI.Controls"
+             xmlns:vm="clr-namespace:PCB_Test.UI.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance vm:OrdersTabViewModel}">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="NoScroll">
+            <ItemsPresenter></ItemsPresenter>
+        </ControlTemplate>
+        <DataTemplate DataType="{x:Type vm:OrderViewModel}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding DisplayName}"/>
+                </Border>
+                <Border Grid.Column="1">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding TotalCost, StringFormat='$0.00'}"/>
+                </Border>
+                <Border Grid.Column="2">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding TotalTime}"/>
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <ListView ItemsSource="{Binding Orders}" 
+                          SelectedItem="{Binding SelectedOrder}"
+                          Template="{StaticResource NoScroll}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" >
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+                <Border>
+                    <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding CreateOrderCommand}">Create order</Button>
+                </Border>
+            </StackPanel>            
+        </ScrollViewer>
+        
+        <Button Grid.Column="1" Grid.Row="1" Command="{Binding CheckoutCommand}">Proceed to checkout</Button>
+    </Grid>
+</UserControl>
