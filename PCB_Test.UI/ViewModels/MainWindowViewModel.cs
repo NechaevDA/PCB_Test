@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using PCB_Test.DataProvider.Interfaces;
 using PCB_Test.Services.Implementations;
 using PCB_Test.Services.Interfaces;
 using PCB_Test.UI.ViewModels.Interfaces;
@@ -21,12 +22,19 @@ namespace PCB_Test.UI.ViewModels
         {
             _ordersTabViewModel = new OrdersTabViewModel(App.GetService<IOrderFactory>());
             _quoteTabViewModel = new QuoteTabViewModel();
-            _preferencesTabViewModel = new PreferencesTabViewModel();
+            _preferencesTabViewModel = new PreferencesTabViewModel(App.GetService<IDataProvider>());
 
             TabViewModels = new ObservableCollection<ITabViewModel>();
             TabViewModels.Add(_ordersTabViewModel);
             TabViewModels.Add(_preferencesTabViewModel);
             TabViewModels.Add(_quoteTabViewModel);
+
+            _ordersTabViewModel.SelectedOrderChanged += OnSelectedOrderChanged;
+        }
+
+        private void OnSelectedOrderChanged(object sender, OrderViewModel e)
+        {
+            _preferencesTabViewModel.SetModel(e);
         }
     }
 }

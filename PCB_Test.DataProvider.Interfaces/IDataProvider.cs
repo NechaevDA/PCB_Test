@@ -10,5 +10,6 @@ namespace PCB_Test.DataProvider.Interfaces
         List<Component> GetAllComponents();
         List<MaskColor> GetAllMaskColors();
         List<Material> GetAllMaterials();
+        List<ComponentSet> GetComponentSets();
     }
 }

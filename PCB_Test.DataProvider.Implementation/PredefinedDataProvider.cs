@@ -12,12 +12,14 @@ namespace PCB_Test.DataProvider.Implementation
         private List<Material> Materials { get; }
         private List<MaskColor> MaskColors { get; }
         private List<Component> Components { get; }
+        private List<ComponentSet> ComponentSets { get; }
 
         public PredefinedDataProvider()
         {
             Materials = new List<Material>();
             MaskColors = new List<MaskColor>();
             Components = new List<Component>();
+            ComponentSets = new List<ComponentSet>();
 
             InitValues();
         }
@@ -73,27 +75,52 @@ namespace PCB_Test.DataProvider.Implementation
 
             Components.Add(new Component
             {
+                Id = 1,
                 Name = "LED",
                 Cost = 0.1,
                 TimeToInstall = 0.2
             });
             Components.Add(new Component
             {
+                Id = 2,
                 Name = "1 KOhm resistor",
                 Cost = 0.5,
                 TimeToInstall = 0.3
             });
             Components.Add(new Component
             {
+                Id = 3,
                 Name = "Microchip ATTINY2313",
                 Cost = 3,
                 TimeToInstall = 1.5
             });
             Components.Add(new Component
             {
+                Id = 4,
                 Name = "Chip 74HC595",
                 Cost = 1,
                 TimeToInstall = 1
+            });
+
+            var componentsDictionary = Components.ToDictionary(x => x.Id);
+
+            ComponentSets.Add(new ComponentSet
+            {
+                Name = "Set 1",
+                Components = new List<Component>
+                {
+                    componentsDictionary[1],
+                    componentsDictionary[2]
+                }
+            });
+
+            ComponentSets.Add(new ComponentSet
+            {
+                Name = "Set 2",
+                Components = Enumerable.Repeat(componentsDictionary[1], 8)
+                      .Union(Enumerable.Repeat(componentsDictionary[2], 8))
+                      .Union(new[] { componentsDictionary[3], componentsDictionary[4] })
+                      .ToList()
             });
         }
 
@@ -110,6 +137,11 @@ namespace PCB_Test.DataProvider.Implementation
         public List<Component> GetAllComponents()
         {
             return Components.OrderBy(x => x.Cost).ToList();
+        }
+
+        public List<ComponentSet> GetComponentSets()
+        {
+            return ComponentSets;
         }
     }
 }

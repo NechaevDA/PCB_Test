@@ -5,6 +5,7 @@ using PCB_Test.UI.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -13,6 +14,8 @@ namespace PCB_Test.UI.ViewModels
 {
     internal class OrdersTabViewModel : TabViewModelBase
     {
+        public event EventHandler<OrderViewModel> SelectedOrderChanged;
+
         public override string Header => "Orders";
         private OrderViewModel _selectedOrder;
         private readonly IOrderFactory _orderFactory;
@@ -49,6 +52,16 @@ namespace PCB_Test.UI.ViewModels
         private void Checkout()
         {
             MessageBox.Show($"Payment information and location was found on this device.\nYour order will be delivered in 7 days.\n{SelectedOrder}", "Checkout");
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+
+            if (e.PropertyName == nameof(SelectedOrder))
+            {
+                SelectedOrderChanged?.Invoke(this, SelectedOrder);
+            }
         }
     }
 }

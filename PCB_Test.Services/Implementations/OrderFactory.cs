@@ -21,6 +21,7 @@ namespace PCB_Test.Services.Implementations
         {
             return new Order
             {
+                Id = Guid.NewGuid(),
                 Name = name,
                 Height = 10,
                 Width = 10,

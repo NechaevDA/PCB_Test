@@ -4,11 +4,9 @@ using System.Text;
 
 namespace PCB_Test.Models
 {
-    public class Component
+    public class ComponentSet
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public double Cost { get; set; }
-        public double TimeToInstall { get; set; }
+        public List<Component> Components { get; set; }
     }
 }

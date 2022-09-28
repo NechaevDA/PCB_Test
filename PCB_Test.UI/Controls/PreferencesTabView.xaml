@@ -9,6 +9,15 @@
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance vm:PreferencesTabViewModel}">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <local:ValidationTextBox Grid.Row="0" ValidationRules="{Binding OrderNameValidationRules}"/>
+        <local:ValidationTextBox Grid.Row="1" ValidationRules="{Binding OrderLayersValidationRules}"/>
+        <local:ValidationTextBox Grid.Row="2" ValidationRules="{Binding OrderDimensionsValidationRules}" InvalidMessage="Dimensions must be within 0.1 and 100 mm"/>
+        <local:ValidationTextBox Grid.Row="3" ValidationRules="{Binding OrderQuantityValidationRules}" InvalidMessage="At least 1 PCB"/>
     </Grid>
 </UserControl>
