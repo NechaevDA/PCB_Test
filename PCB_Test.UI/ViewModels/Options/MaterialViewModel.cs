@@ -16,5 +16,10 @@ namespace PCB_Test.UI.ViewModels.Options
         {
             Model = model;
         }
+
+        public override string ToString()
+        {
+            return DisplayName;
+        }
     }
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -17,14 +18,32 @@ namespace PCB_Test.UI.ViewModels
     {
         public override string Header => "Preferences";
 
+        private MaterialViewModel _selectedMaterial;
+        private ComponentSetViewModel _selectedComponentSet;
+        private MaskColorViewModel _selectedMaskColor;
+
+        public MaskColorViewModel SelectedMaskColor
+        {
+            get { return _selectedMaskColor; }
+            set { SetProperty(ref _selectedMaskColor, value); }
+        }
+
+        public ComponentSetViewModel SelectedComponentSet
+        {
+            get { return _selectedComponentSet; }
+            set { SetProperty(ref _selectedComponentSet, value); }
+        }
+
+        public MaterialViewModel SelectedMaterial
+        {
+            get { return _selectedMaterial; }
+            set { SetProperty(ref _selectedMaterial, value); }
+        }
+
         public OrderViewModel Model { get; private set; }
         public ObservableCollection<MaterialViewModel> AvailableMaterials { get; }
         public ObservableCollection<MaskColorViewModel> AvailableMaskColors { get; }
         public ObservableCollection<ComponentSetViewModel> AvailableComponentSets { get; }
-        public ObservableCollection<IValidationRule> OrderNameValidationRules { get; }
-        public ObservableCollection<IValidationRule> OrderDimensionsValidationRules { get; }
-        public ObservableCollection<IValidationRule> OrderQuantityValidationRules { get; }
-        public ObservableCollection<IValidationRule> OrderLayersValidationRules { get; }
 
 
         private readonly IDataProvider _dataProvider;
@@ -42,25 +61,6 @@ namespace PCB_Test.UI.ViewModels
 
             var componentSetViewModels = _dataProvider.GetComponentSets().Select(componentSet => new ComponentSetViewModel(componentSet));
             AvailableComponentSets = new ObservableCollection<ComponentSetViewModel>(componentSetViewModels);
-
-            OrderNameValidationRules = new ObservableCollection<IValidationRule>(ValidationRulesBuilder.Init()
-                                                                                                       .Required()
-                                                                                                       .Build());
-
-            OrderDimensionsValidationRules = new ObservableCollection<IValidationRule>(ValidationRulesBuilder.Init()
-                                                                                                             .Required()
-                                                                                                             .Limited(0d, 100d)
-                                                                                                             .Build());
-
-            OrderQuantityValidationRules = new ObservableCollection<IValidationRule>(ValidationRulesBuilder.Init()
-                                                                                                           .Required()
-                                                                                                           .Limited(1, int.MaxValue)
-                                                                                                           .Build());
-
-            OrderLayersValidationRules = new ObservableCollection<IValidationRule>(ValidationRulesBuilder.Init()
-                                                                                                         .Required()
-                                                                                                         .Limited(1, 10)
-                                                                                                         .Build());
         }
 
         public void SetModel(OrderViewModel model)
@@ -68,6 +68,9 @@ namespace PCB_Test.UI.ViewModels
             ExecuteWithoutNotification(() =>
             {
                 Model = model;
+                SelectedMaskColor = AvailableMaskColors.First(x => x.Model.Id == Model.MaskColor.Id);
+                SelectedComponentSet = AvailableComponentSets.First(x => x.Model.Id == Model.ComponentSet.Id);
+                SelectedMaterial = AvailableMaterials.First(x => x.Model.Id == Model.Material.Id);
                 IsEnabled = Model != null;
             });
         }
@@ -88,7 +91,14 @@ namespace PCB_Test.UI.ViewModels
             if (_suppressPropertyChanged)
                 return;
 
-            
+            if (e.PropertyName == nameof(SelectedMaterial))
+                Model.Material = SelectedMaterial.Model;
+
+            if (e.PropertyName == nameof(SelectedComponentSet))
+                Model.ComponentSet = SelectedComponentSet.Model;
+
+            if (e.PropertyName == nameof(SelectedMaskColor))
+                Model.MaskColor = SelectedMaskColor.Model;
         }
     }
 }

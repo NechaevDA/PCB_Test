@@ -6,6 +6,7 @@ namespace PCB_Test.Models
 {
     public class Material
     {
+        public int Id { get; set; }
         /// <summary>
         /// Material Name
         /// </summary>

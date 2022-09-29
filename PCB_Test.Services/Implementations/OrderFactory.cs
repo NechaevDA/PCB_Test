@@ -27,7 +27,7 @@ namespace PCB_Test.Services.Implementations
                 Width = 10,
                 LayerCount = 1,
                 Quantity = 1,
-                Components = new List<Component>(),
+                ComponentSet = _dataProvider.GetComponentSets().FirstOrDefault(),
                 MaskColor = _dataProvider.GetAllMaskColors().FirstOrDefault(),
                 Material = _dataProvider.GetAllMaterials().FirstOrDefault()                
             };

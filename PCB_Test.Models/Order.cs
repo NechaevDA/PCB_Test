@@ -14,6 +14,6 @@ namespace PCB_Test.Models
         public int Quantity { get; set; }
         public Material Material { get; set; }
         public MaskColor MaskColor { get; set; }
-        public List<Component> Components { get; set; }
+        public ComponentSet ComponentSet { get; set; }
     }
 }

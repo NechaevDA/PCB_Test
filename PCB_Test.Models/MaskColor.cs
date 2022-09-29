@@ -6,6 +6,7 @@ namespace PCB_Test.Models
 {
     public class MaskColor
     {
+        public int Id { get; set; }
         /// <summary>
         /// Color name
         /// </summary>

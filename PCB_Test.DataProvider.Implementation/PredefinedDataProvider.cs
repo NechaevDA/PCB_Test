@@ -28,24 +28,28 @@ namespace PCB_Test.DataProvider.Implementation
         {
             Materials.Add(new Material
             {
+                Id = 1,
                 Name = "Cardboard",
                 TimeCost = 0.5,
                 Cost = 0.1
             });
             Materials.Add(new Material
             {
+                Id = 2,
                 Name = "Metal",
                 TimeCost = 2,
                 Cost = 10
             });
             Materials.Add(new Material
             {
+                Id = 3,
                 Name = "Phenolic paper",
                 TimeCost = 1,
                 Cost = 1
             });
             Materials.Add(new Material
             {
+                Id = 4,
                 Name = "Kapton",
                 TimeCost = 5,
                 Cost = 12
@@ -53,6 +57,7 @@ namespace PCB_Test.DataProvider.Implementation
 
             MaskColors.Add(new MaskColor
             {
+                Id = 1,
                 Name = "Green",
                 R = 0x00,
                 G = 0xff,
@@ -60,6 +65,7 @@ namespace PCB_Test.DataProvider.Implementation
             });
             MaskColors.Add(new MaskColor
             {
+                Id = 2,
                 Name = "Blue",
                 R = 0x00,
                 G = 0x00,
@@ -67,6 +73,7 @@ namespace PCB_Test.DataProvider.Implementation
             });
             MaskColors.Add(new MaskColor
             {
+                Id = 3,
                 Name = "Red",
                 R = 0xff,
                 G = 0x00,
@@ -106,6 +113,7 @@ namespace PCB_Test.DataProvider.Implementation
 
             ComponentSets.Add(new ComponentSet
             {
+                Id = 1,
                 Name = "Set 1",
                 Components = new List<Component>
                 {
@@ -116,6 +124,7 @@ namespace PCB_Test.DataProvider.Implementation
 
             ComponentSets.Add(new ComponentSet
             {
+                Id = 2,
                 Name = "Set 2",
                 Components = Enumerable.Repeat(componentsDictionary[1], 8)
                       .Union(Enumerable.Repeat(componentsDictionary[2], 8))
