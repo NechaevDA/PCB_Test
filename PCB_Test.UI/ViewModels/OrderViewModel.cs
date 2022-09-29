@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using PCB_Test.Models;
+using PCB_Test.UI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,9 +27,10 @@ namespace PCB_Test.UI.ViewModels
         public ComponentSet ComponentSet
         {
             get { return _componentSet; }
-            set {
-                SetProperty(ref _componentSet, value);
+            set
+            {
                 Model.ComponentSet = value;
+                SetProperty(ref _componentSet, value);
             }
         }
 
@@ -37,8 +39,8 @@ namespace PCB_Test.UI.ViewModels
             get { return _displayName; }
             set
             {
-                SetProperty(ref _displayName, value);
                 Model.Name = value;
+                SetProperty(ref _displayName, value);
             }
         }
 
@@ -47,8 +49,8 @@ namespace PCB_Test.UI.ViewModels
             get { return _maskColor; }
             set
             {
-                SetProperty(ref _maskColor, value);
                 Model.MaskColor = value;
+                SetProperty(ref _maskColor, value);
             }
         }
 
@@ -57,8 +59,8 @@ namespace PCB_Test.UI.ViewModels
             get { return _material; }
             set
             {
-                SetProperty(ref _material, value);
                 Model.Material = value;
+                SetProperty(ref _material, value);
             }
         }
 
@@ -67,8 +69,8 @@ namespace PCB_Test.UI.ViewModels
             get { return _quantity; }
             set
             {
-                SetProperty(ref _quantity, value);
                 Model.Quantity = value;
+                SetProperty(ref _quantity, value);
             }
         }
 
@@ -77,8 +79,8 @@ namespace PCB_Test.UI.ViewModels
             get { return _layersCount; }
             set
             {
-                SetProperty(ref _layersCount, value);
                 Model.LayerCount = value;
+                SetProperty(ref _layersCount, value);
             }
         }
 
@@ -87,8 +89,8 @@ namespace PCB_Test.UI.ViewModels
             get { return _width; }
             set
             {
-                SetProperty(ref _width, value);
                 Model.Width = value;
+                SetProperty(ref _width, value);
             }
         }
 
@@ -97,8 +99,8 @@ namespace PCB_Test.UI.ViewModels
             get { return _height; }
             set
             {
-                SetProperty(ref _height, value);
                 Model.Height = value;
+                SetProperty(ref _height, value);
             }
         }
 
@@ -136,8 +138,8 @@ namespace PCB_Test.UI.ViewModels
 
         public void Refresh()
         {
-            TotalCost = ComponentSet.Components.Sum(x => x.Cost) + Height * Width * Material.Cost;
-            TotalTime = ComponentSet.Components.Sum(x => x.TimeToInstall) + Material.TimeCost * (2 * (Height + Width));
+            TotalCost = Model.ComponentsCostImpact() + Model.DimensionsCostImpact();
+            TotalTime = Model.ComponentsTimeImpact() + Model.DimensionsTimeImpact();
         }
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)

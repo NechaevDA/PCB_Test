@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PCB_Test.UI"
              xmlns:vm="clr-namespace:PCB_Test.UI.ViewModels"
+             xmlns:helpers="clr-namespace:PCB_Test.UI.Helpers"
              xmlns:controls="clr-namespace:PCB_Test.UI.Controls"
              StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
+        <helpers:RgbConverter x:Key="RgbConverter"/>
+        
         <Style x:Key="AdaptiveTabControl" TargetType="{x:Type TabControl}">
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Template">

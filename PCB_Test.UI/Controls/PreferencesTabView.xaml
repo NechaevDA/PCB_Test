@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PCB_Test.UI.Controls"
-             xmlns:helpers="clr-namespace:PCB_Test.UI.Helpers"
              xmlns:vm="clr-namespace:PCB_Test.UI.ViewModels"
              xmlns:vmo="clr-namespace:PCB_Test.UI.ViewModels.Options"
              xmlns:validation="clr-namespace:PCB_Test.UI.Helpers.Validation"
@@ -12,8 +11,6 @@
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance vm:PreferencesTabViewModel}">
     <UserControl.Resources>
-        <helpers:RgbConverter x:Key="RgbConverter"/>
-
         <ControlTemplate x:Key="ErrorTemplate">
             <DockPanel>
                 <TextBlock Foreground="Red" FontSize="20">!</TextBlock>

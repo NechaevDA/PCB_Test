@@ -79,6 +79,14 @@ namespace PCB_Test.DataProvider.Implementation
                 G = 0x00,
                 B = 0x00
             });
+            MaskColors.Add(new MaskColor
+            {
+                Id = 4,
+                Name = "Other",
+                R = 0xfc,
+                G = 0xa0,
+                B = 0x0a
+            });
 
             Components.Add(new Component
             {
@@ -127,8 +135,8 @@ namespace PCB_Test.DataProvider.Implementation
                 Id = 2,
                 Name = "Set 2",
                 Components = Enumerable.Repeat(componentsDictionary[1], 8)
-                      .Union(Enumerable.Repeat(componentsDictionary[2], 8))
-                      .Union(new[] { componentsDictionary[3], componentsDictionary[4] })
+                      .Concat(Enumerable.Repeat(componentsDictionary[2], 8))
+                      .Concat(new[] { componentsDictionary[3], componentsDictionary[4] })
                       .ToList()
             });
         }

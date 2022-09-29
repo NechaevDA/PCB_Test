@@ -35,6 +35,7 @@ namespace PCB_Test.UI.ViewModels
         private void OnSelectedOrderChanged(object sender, OrderViewModel e)
         {
             _preferencesTabViewModel.SetModel(e);
+            _quoteTabViewModel.SetModel(e);
         }
     }
 }

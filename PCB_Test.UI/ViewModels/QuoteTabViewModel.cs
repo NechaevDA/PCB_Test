@@ -11,22 +11,33 @@ namespace PCB_Test.UI.ViewModels
     internal class QuoteTabViewModel : TabViewModelBase
     {
         public override string Header => "Quote";
+        private OrderDetailsDisplayViewModel _orderDetailsDisplayViewModel;
 
-        public Order Model { get; private set; }
-
-        public void SetModel(Order model)
+        public OrderDetailsDisplayViewModel OrderDetailsDisplayViewModel
         {
-            Model = model;
+            get { return _orderDetailsDisplayViewModel; }
+            set { SetProperty(ref _orderDetailsDisplayViewModel, value); }
         }
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
+        public OrderViewModel Model { get; private set; }
 
-            if (e.PropertyName == nameof(Model))
-            {
-                IsEnabled = Model != null;
-            }
+        public void SetModel(OrderViewModel model)
+        {
+            if (Model != null)
+                Model.PropertyChanged -= OnModelChanged;
+
+            Model = model;
+
+            if (Model != null)
+                Model.PropertyChanged += OnModelChanged;
+
+            IsEnabled = Model != null;
+            OrderDetailsDisplayViewModel = new OrderDetailsDisplayViewModel(Model.Model);
+        }
+
+        private void OnModelChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OrderDetailsDisplayViewModel = new OrderDetailsDisplayViewModel(Model.Model);
         }
     }
 }
