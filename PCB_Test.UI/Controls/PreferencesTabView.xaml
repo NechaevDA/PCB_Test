@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PCB_Test.UI.Controls"
+             xmlns:helpers="clr-namespace:PCB_Test.UI.Helpers"
              xmlns:vm="clr-namespace:PCB_Test.UI.ViewModels"
              xmlns:vmo="clr-namespace:PCB_Test.UI.ViewModels.Options"
              xmlns:validation="clr-namespace:PCB_Test.UI.Helpers.Validation"
@@ -11,6 +12,8 @@
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance vm:PreferencesTabViewModel}">
     <UserControl.Resources>
+        <helpers:RgbConverter x:Key="RgbConverter"/>
+
         <ControlTemplate x:Key="ErrorTemplate">
             <DockPanel>
                 <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
@@ -154,8 +157,35 @@
         </Border>
         <ComboBox Grid.Row="6" Grid.Column="1"
                   Style="{StaticResource InputComboBox}"
-                  ItemsSource="{Binding AvailableMaterials}"
-                  SelectedItem="{Binding SelectedMaterial}"/>
+                  ItemsSource="{Binding AvailableMaskColors}"
+                  SelectedItem="{Binding SelectedMaskColor}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type vmo:MaskColorViewModel}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" Height="20" Width="20" Stroke="LightGray" StrokeThickness="1">
+                            <Rectangle.Fill>
+                                <SolidColorBrush>
+                                    <SolidColorBrush.Color>
+                                        <MultiBinding Converter="{StaticResource RgbConverter}">
+                                            <Binding Path="ColorR" />
+                                            <Binding Path="ColorG" />
+                                            <Binding Path="ColorB" />
+                                        </MultiBinding>
+                                    </SolidColorBrush.Color>
+                                </SolidColorBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Border Grid.Column="1">
+                            <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <!-- COMPONENT SET -->
         <Border Grid.Row="7" Grid.Column="0">
