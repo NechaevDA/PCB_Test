@@ -16,13 +16,17 @@ namespace PCB_Test.UI.ViewModels
         public ObservableCollection<OrderDetailsEntry> DetailsEntries { get; }
         public ICollectionView EntriesView { get; }
 
-        public OrderDetailsDisplayViewModel(Order model)
+        public OrderDetailsDisplayViewModel()
         {
             DetailsEntries = new ObservableCollection<OrderDetailsEntry>();
-            ProcessModel(model);
 
             EntriesView = new ListCollectionView(DetailsEntries);
             EntriesView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(OrderDetailsEntry.Category)));
+        }
+
+        public OrderDetailsDisplayViewModel(Order model) : this()
+        {
+            ProcessModel(model);
         }
 
         private void ProcessModel(Order model)
@@ -33,7 +37,7 @@ namespace PCB_Test.UI.ViewModels
                 Title = "Dimensions",
                 Value = $"{model.Width} x {model.Height} mm",
                 TimeImpact = model.DimensionsTimeImpact(),
-                Cost = model.ComponentsCostImpact()
+                Cost = model.DimensionsCostImpact()
             });
             DetailsEntries.Add(new OrderDetailsEntry
             {
@@ -41,7 +45,7 @@ namespace PCB_Test.UI.ViewModels
                 Title = "Quantity",
                 Value = model.Quantity.ToString(),
                 TimeImpact = model.DimensionsTimeImpact() * model.Quantity,
-                Cost = model.ComponentsCostImpact() * model.Quantity
+                Cost = model.DimensionsCostImpact() * model.Quantity
             });
 
             DetailsEntries.Add(new OrderDetailsEntry
@@ -70,6 +74,12 @@ namespace PCB_Test.UI.ViewModels
                     TimeImpact = componentGroup.Sum(x => x.TimeToInstall)
                 });
             }
+        }
+
+        internal void Update(Order model)
+        {
+            DetailsEntries.Clear();
+            ProcessModel(model);
         }
     }
 }

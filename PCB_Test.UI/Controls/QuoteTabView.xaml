@@ -14,5 +14,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <local:OrderDetailsDisplay Grid.Column="0" DataContext="{Binding OrderDetailsDisplayViewModel}"/>
+        <local:GraphicRepresentationControl Grid.Column="1" DataContext="{Binding GraphicRepresentationViewModel}"/>
     </Grid>
 </UserControl>

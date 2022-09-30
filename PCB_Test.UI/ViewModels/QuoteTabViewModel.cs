@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows.Media;
 
 namespace PCB_Test.UI.ViewModels
 {
@@ -12,6 +13,13 @@ namespace PCB_Test.UI.ViewModels
     {
         public override string Header => "Quote";
         private OrderDetailsDisplayViewModel _orderDetailsDisplayViewModel;
+        private GraphicRepresentationViewModel _graphicRepresentationViewModel;
+
+        public GraphicRepresentationViewModel GraphicRepresentationViewModel
+        {
+            get { return _graphicRepresentationViewModel; }
+            set { _graphicRepresentationViewModel = value; }
+        }
 
         public OrderDetailsDisplayViewModel OrderDetailsDisplayViewModel
         {
@@ -20,6 +28,11 @@ namespace PCB_Test.UI.ViewModels
         }
 
         public OrderViewModel Model { get; private set; }
+
+        public QuoteTabViewModel()
+        {
+            OrderDetailsDisplayViewModel = new OrderDetailsDisplayViewModel();
+        }
 
         public void SetModel(OrderViewModel model)
         {
@@ -32,12 +45,23 @@ namespace PCB_Test.UI.ViewModels
                 Model.PropertyChanged += OnModelChanged;
 
             IsEnabled = Model != null;
-            OrderDetailsDisplayViewModel = new OrderDetailsDisplayViewModel(Model.Model);
+            
+            UpdateViews();
         }
 
         private void OnModelChanged(object sender, PropertyChangedEventArgs e)
         {
-            OrderDetailsDisplayViewModel = new OrderDetailsDisplayViewModel(Model.Model);
+            UpdateViews();
+        }
+
+        private void UpdateViews()
+        {
+            if (GraphicRepresentationViewModel != null)
+                GraphicRepresentationViewModel.Dispose();
+            GraphicRepresentationViewModel = new GraphicRepresentationViewModel(Model);
+
+            if (OrderDetailsDisplayViewModel != null)
+                OrderDetailsDisplayViewModel.Update(Model.Model);
         }
     }
 }
