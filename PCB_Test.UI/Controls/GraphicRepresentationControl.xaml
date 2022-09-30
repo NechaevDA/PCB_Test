@@ -64,5 +64,26 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
+        <Border Grid.Row="2">
+            <!-- Can be the whole PCB preview -->
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border>
+                    <TextBlock Text="Color preview" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Rectangle Height="200" Width="200" Stroke="LightGray" StrokeThickness="1">
+                    <Rectangle.Fill>
+                        <SolidColorBrush>
+                            <SolidColorBrush.Color>
+                                <MultiBinding Converter="{StaticResource RgbConverter}">
+                                    <Binding Path="Model.MaskColor.R" />
+                                    <Binding Path="Model.MaskColor.G" />
+                                    <Binding Path="Model.MaskColor.B" />
+                                </MultiBinding>
+                            </SolidColorBrush.Color>
+                        </SolidColorBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </StackPanel>            
+        </Border>
     </Grid>
 </UserControl>
