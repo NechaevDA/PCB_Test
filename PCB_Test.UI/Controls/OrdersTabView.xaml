@@ -13,14 +13,14 @@
             <ItemsPresenter></ItemsPresenter>
         </ControlTemplate>
         <DataTemplate DataType="{x:Type vm:OrderViewModel}">
-            <Grid>
+            <Grid Height="25">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0">
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+                    <TextBlock VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding Name}"/>
                 </Border>
                 <Border Grid.Column="1">
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding TotalCost, StringFormat='$0.00'}"/>
@@ -31,7 +31,7 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="0 10 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -52,11 +52,11 @@
                     </ListView.ItemContainerStyle>
                 </ListView>
                 <Border>
-                    <Button HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding CreateOrderCommand}">Create order</Button>
+                    <Button HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Padding="5" Cursor="Hand" Command="{Binding CreateOrderCommand}">Create order</Button>
                 </Border>
             </StackPanel>            
         </ScrollViewer>
         
-        <Button Grid.Column="1" Grid.Row="1" Command="{Binding CheckoutCommand}">Proceed to checkout</Button>
+        <Button Grid.Column="1" Grid.Row="1" Margin="10" Padding="5" Cursor="Hand" Command="{Binding CheckoutCommand}">Proceed to checkout</Button>
     </Grid>
 </UserControl>
